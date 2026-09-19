@@ -139,14 +139,14 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Caracter.cpp" />
-    <ClCompile Include="Funciones.cpp" />
+    <ClCompile Include="CharInstance.cpp" />
+    <ClCompile Include="Functions.cpp" />
     <ClCompile Include="Proyecto_Estruc1_Huffman.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ArbolBn.h" />
-    <ClInclude Include="Caracter.h" />
-    <ClInclude Include="Funciones.h" />
+    <ClInclude Include="BTree.h" />
+    <ClInclude Include="CharInstance.h" />
+    <ClInclude Include="Functions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

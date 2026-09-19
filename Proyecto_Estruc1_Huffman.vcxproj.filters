@@ -18,21 +18,21 @@
     <ClCompile Include="Proyecto_Estruc1_Huffman.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="Funciones.cpp">
+    <ClCompile Include="Functions.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="Caracter.cpp">
+    <ClCompile Include="CharInstance.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ArbolBn.h">
+    <ClInclude Include="BTree.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Caracter.h">
+    <ClInclude Include="CharInstance.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Funciones.h">
+    <ClInclude Include="Functions.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

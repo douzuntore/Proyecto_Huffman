@@ -1,4 +1,4 @@
-#include "Funciones.h"
+#include "Functions.h"
 
 std::vector<CharInstance> createInstanceList(std::string string_input)
 {

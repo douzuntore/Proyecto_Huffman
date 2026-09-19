@@ -3,7 +3,7 @@
 template <typename _t>
 class BTree 
 {
-	_t dato;
+	_t data;
 	BTree<_t>* nodes[2] = { nullptr, nullptr };
 public:
 	BTree(_t);
@@ -15,14 +15,14 @@ public:
 };
 
 template <typename _t>
-BTree<_t>::BTree(_t dato) :
-	dato(dato)
+BTree<_t>::BTree(_t data) :
+	data(data)
 {
 }
 
 template <typename _t>
-BTree<_t>::BTree(_t dato, BTree<_t>* left_node, BTree<_t>* right_node) :
-	dato(dato)
+BTree<_t>::BTree(_t data, BTree<_t>* left_node, BTree<_t>* right_node) :
+	data(data)
 {
 	appendLeft(left_node);
 	appendRight(right_node);
@@ -52,7 +52,7 @@ void BTree<_t>::appendRight(BTree<_t>* node)
 template <typename _t>
 _t BTree<_t>::getDato()
 {
-	return dato;
+	return data;
 }
 
 

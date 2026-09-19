@@ -1,7 +1,6 @@
 #pragma once
-#include "Pila.h"
-#include "Caracter.h"
-#include "ArbolBn.h"
+#include "CharInstance.h"
+#include "BTree.h"
 #include <string>
 #include <vector>
 
