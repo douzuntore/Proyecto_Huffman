@@ -144,8 +144,6 @@
     <ClCompile Include="Proyecto_Estruc1_Huffman.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\TDAPila\List.h" />
-    <ClInclude Include="..\TDAPila\Pila.h" />
     <ClInclude Include="ArbolBn.h" />
     <ClInclude Include="Caracter.h" />
     <ClInclude Include="Funciones.h" />

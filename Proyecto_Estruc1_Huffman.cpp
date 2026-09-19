@@ -4,9 +4,11 @@ int main()
 {
     using namespace std;
 	
-	vector<Caracter> listado = listarCaracteres("aaaabbccd");
+	vector<CharInstance> list = createInstanceList("abcdeabcdeabcdeabcdeabcdeabcdabaaaaaaaa");
 
-	sortListado(listado);
+	sortInstanceList(list);
 
-	crearArbolBn(listado);
+	BTree<CharInstance>* instance_tree = createHuffmanTree(list);
+
+	delete instance_tree;
 }

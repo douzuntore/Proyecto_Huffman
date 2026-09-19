@@ -1,0 +1,58 @@
+#pragma once
+
+template <typename _t>
+class BTree 
+{
+	_t dato;
+	BTree<_t>* nodes[2] = { nullptr, nullptr };
+public:
+	BTree(_t);
+	BTree(_t, BTree<_t>*, BTree<_t>*);
+	~BTree();
+	void appendLeft(BTree<_t>*);
+	void appendRight(BTree<_t>*);
+	_t getDato();
+};
+
+template <typename _t>
+BTree<_t>::BTree(_t dato) :
+	dato(dato)
+{
+}
+
+template <typename _t>
+BTree<_t>::BTree(_t dato, BTree<_t>* left_node, BTree<_t>* right_node) :
+	dato(dato)
+{
+	appendLeft(left_node);
+	appendRight(right_node);
+}
+
+template <typename _t>
+BTree<_t>::~BTree()
+{
+	for (BTree<_t>* node : nodes)
+	{
+		delete node;
+	}
+}
+
+template <typename _t>
+void BTree<_t>::appendLeft(BTree<_t>* node)
+{
+	nodes[0] = node;
+}
+
+template <typename _t>
+void BTree<_t>::appendRight(BTree<_t>* node)
+{
+	nodes[1] = node;
+}
+
+template <typename _t>
+_t BTree<_t>::getDato()
+{
+	return dato;
+}
+
+
