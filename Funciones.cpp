@@ -62,16 +62,43 @@ ArbolBn<Caracter>* crearArbolBn(std::vector<Caracter> listado)
 {
 	ArbolBn<Caracter>* raiz_1 = nullptr;
 	ArbolBn<Caracter>* raiz_2 = nullptr;
-	for (size_t i = listado.size() - 2; i >= 0; i--)
+	for (int i = listado.size() - 2; i >= 0; i--)
 	{
 		if (raiz_1)
 		{
-			ArbolBn<Caracter>* nodo = new ArbolBn<Caracter>(listado.at(i));
+			if (i == 0 || listado.at(i).getReps() >= raiz_1->getDato().getReps())
+			{
+				ArbolBn<Caracter>* nodo = new ArbolBn<Caracter>(listado.at(i));
+				raiz_2 = raiz_1;
+				raiz_1 = new ArbolBn<Caracter>(
+					Caracter('\0', raiz_2->getDato().getReps() + nodo->getDato().getReps())
+				);
+				raiz_1->appendLeft(nodo);
+				raiz_1->appendRight(raiz_2);
+			}
+			else
+			{
+				i--;
+				ArbolBn<Caracter>* c_left = new ArbolBn<Caracter>(listado.at(i));
+				ArbolBn<Caracter>* c_right = new ArbolBn<Caracter>(listado.at(i + 1));
+				ArbolBn<Caracter>* left = new ArbolBn<Caracter>(
+					Caracter('\0', c_left->getDato().getReps() + c_right->getDato().getReps())
+				);
+				left->appendLeft(c_left);
+				left->appendRight(c_right);
+
+				raiz_2 = raiz_1;
+				raiz_1 = new ArbolBn<Caracter>(
+					Caracter('\0', left->getDato().getReps() + raiz_2->getDato().getReps())
+				);
+				raiz_1->appendLeft(left);
+				raiz_1->appendRight(raiz_2);
+			}
 		}
 		else 
 		{
 			ArbolBn<Caracter>* left = new ArbolBn<Caracter>(listado.at(i));
-			ArbolBn<Caracter>* right = new ArbolBn<Caracter>(listado.at(i+1));
+			ArbolBn<Caracter>* right = new ArbolBn<Caracter>(listado.at(i + 1));
 			raiz_1 = new ArbolBn<Caracter>(
 				Caracter('\0', left->getDato().getReps() + right->getDato().getReps())
 			);
@@ -79,5 +106,6 @@ ArbolBn<Caracter>* crearArbolBn(std::vector<Caracter> listado)
 			raiz_1->appendRight(right);
 		}
 	}
+	return raiz_1;
 }
 

@@ -7,3 +7,4 @@
 
 std::vector<Caracter> listarCaracteres(std::string cadena);
 void sortListado(std::vector<Caracter>& listado);
+ArbolBn<Caracter>* crearArbolBn(std::vector<Caracter> listado);
