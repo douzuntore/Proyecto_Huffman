@@ -20,7 +20,7 @@ char CharInstance::getChr()
 	return character;
 }
 
-int CharInstance::getReps()
+int CharInstance::getInstances()
 {
 	return instances;
 }

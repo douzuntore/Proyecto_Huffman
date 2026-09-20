@@ -14,7 +14,7 @@ public:
 	//CharInstance(char, int, string);
 	void repeat();
 	char getChr();
-	int getReps();
+	int getInstances();
 	string getCode();
 	void addCode(string);
 };

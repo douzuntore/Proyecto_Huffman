@@ -4,9 +4,9 @@ int main()
 {
     using namespace std;
 	
-	vector<CharInstance> list = createInstanceList("abcdeabcdeabcdeabcdeabcdeabcdabaaaaaaaa");
+	vector<BTree<CharInstance>*> list = createInstanceList("ESTRUCTURA DE DATOS I");
 
-	sortInstanceList(list);
+	//sortInstanceList(list);
 
 	BTree<CharInstance>* instance_tree = createHuffmanTree(list);
 	vector<CharInstance> codeTablesVector = createCodeTables(*instance_tree);

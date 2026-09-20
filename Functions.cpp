@@ -1,17 +1,21 @@
 #include "Functions.h"
 #include <iomanip>
 
-std::vector<CharInstance> createInstanceList(std::string string_input)
+using list_type = std::vector<BTree<CharInstance>*>;
+
+list_type createInstanceList(std::string string_input)
 {
 	using namespace std;
-	vector<CharInstance> listado;
+	list_type instance_list;
 
 	for (size_t i = 0; i < string_input.size(); i++)
 	{
-		if (listado.empty())
+		if (instance_list.empty())
 		{
-			listado.push_back(
-				CharInstance(string_input.at(i))
+			instance_list.push_back(
+				new BTree<CharInstance>(
+					CharInstance(string_input.at(i))
+				)
 			);
 			string_input.erase(string_input.begin());
 			i--;
@@ -19,19 +23,21 @@ std::vector<CharInstance> createInstanceList(std::string string_input)
 		else
 		{
 			bool is_new_instance = true;
-			for (CharInstance& chr : listado)
+			for (BTree<CharInstance>* chr : instance_list)
 			{
-				if (chr.getChr() == string_input.at(i))
+				if (chr->getData().getChr() == string_input.at(i))
 				{
-					chr.repeat();
+					chr->getData().repeat();
 					is_new_instance = false;
 					break;
 				}
 			}
 			if (is_new_instance)
 			{
-				listado.push_back(
-					CharInstance(string_input.at(i))
+				instance_list.push_back(
+					new BTree<CharInstance>(
+						CharInstance(string_input.at(i))
+					)
 				);
 				string_input.erase(string_input.begin());
 				i--;
@@ -39,83 +45,46 @@ std::vector<CharInstance> createInstanceList(std::string string_input)
 		}
 	}
 
-	return listado;
+	return instance_list;
 }
 
-void sortInstanceList(std::vector<CharInstance>& instance_list)
+BTree<CharInstance>* createHuffmanTree(list_type instance_list)
 {
-	for (size_t i = 0; i < instance_list.size(); i++)
+	while (instance_list.size() > 1)
 	{
-		int max_index = 0, max_instances = 1;
-		for (size_t j = 0; j < instance_list.size() - i; j++)
+		BTree<CharInstance>* new_tree_nodes[2];
+		for (BTree<CharInstance>*& new_tree_node : new_tree_nodes)
 		{
-			if (instance_list.at(j).getReps() >= max_instances) {
-				max_instances = instance_list.at(j).getReps();
-				max_index = j;
-			}
-		}
-		instance_list.push_back(instance_list.at(max_index));
-		instance_list.erase(instance_list.begin() + max_index);
-	}
-}
-
-BTree<CharInstance>* createHuffmanTree(std::vector<CharInstance> listado)
-{
-	BTree<CharInstance>* main_root = nullptr;
-
-	for (int i = listado.size() - 2; i >= 0; i--)
-	{
-		if (main_root)
-		{
-			if (i == 0 || listado.at(i).getReps() >= main_root->getDato().getReps())
+			new_tree_node = instance_list.at(0);
+			size_t min_index = 0;
+			int min_instances = instance_list.at(0)->getData().getInstances();
+			for (size_t i = 1; i < instance_list.size(); i++)
 			{
-				main_root = new BTree<CharInstance>(
-					//definir dato interno
-					CharInstance('\0', listado.at(i).getReps() + main_root->getDato().getReps()),
-					//definir nodo izquierdo
-					new BTree<CharInstance>(listado.at(i)),
-					//definir nodo derecho
-					main_root
-				);
+				BTree<CharInstance>* chr_node = instance_list[i];
+				if (min_instances > chr_node->getData().getInstances())
+				{
+					min_instances = chr_node->getData().getInstances();
+					new_tree_node = chr_node;
+					min_index = i;
+				}
 			}
-			else
-			{
-				i--;
-
-				BTree<CharInstance>* left_child = new BTree<CharInstance>(
-					//definir dato interno
-					CharInstance('\0', listado.at(i).getReps() + listado.at(i + 1).getReps()),
-					//definir nodo izquierdo
-					new BTree<CharInstance>(listado.at(i)),
-					//definir nodo derecho
-					new BTree<CharInstance>(listado.at(i + 1))
-				);
-
-				main_root = new BTree<CharInstance>(
-					//definir dato interno
-					CharInstance('\0', left_child->getDato().getReps() + main_root->getDato().getReps()),
-					//definir nodo izquierdo
-					left_child,
-					//definir nodo derecho
-					main_root
-				);
-			}
+			instance_list.erase(instance_list.begin() + min_index);
 		}
-		else 
-		{
-			main_root = new BTree<CharInstance>(
-				//definir dato interno
-				CharInstance('\0', listado.at(i).getReps() + listado.at(i + 1).getReps()),
-				//definir nodo izquierdo
-				new BTree<CharInstance>(listado.at(i)),
-				//definir nodo derecho
-				new BTree<CharInstance>(listado.at(i + 1))
-			);
-		}
+		BTree<CharInstance>* new_tree = new BTree<CharInstance>(
+			//definir dato interno
+			CharInstance('\0', new_tree_nodes[1]->getData().getInstances() + new_tree_nodes[0]->getData().getInstances()),
+			//definir nodo izquierdo
+			new_tree_nodes[1],
+			//definir nodo derecho
+			new_tree_nodes[0]
+		);
+		instance_list.push_back(new_tree);
 	}
 
-	return main_root;
+	return instance_list.at(0);
 }
+
+// --------------------
 
 vector<CharInstance> createCodeTables(BTree<CharInstance>& node) {
 	vector<CharInstance> vector;
@@ -127,32 +96,32 @@ vector<CharInstance> createCodeTables(BTree<CharInstance>& node) {
 void showCodeTables(vector<CharInstance> vector) {
 
 	cout << "Tabla de codigos" << endl;
-	cout << left << setw(10) << "Codigo"
+	cout << left << setw(13) << "Codigo"
 		<< setw(13) << "caracter"
-		<< setw(12) << "frecuencia" << endl;
+		<< setw(13) << "frecuencia" << endl;
 	for (int i = 0; i < vector.size(); i++){
-		cout << left << setw(10) << vector[i].getCode()
+		cout << left << setw(13) << vector[i].getCode()
 			<< setw(13) << vector[i].getChr()
-			<< setw(12) << vector[i].getReps() << endl;
+			<< setw(13) << vector[i].getInstances() << endl;
 	}
 
 }
 
 void testeo(BTree<CharInstance>& node, string pos, vector<CharInstance>& resultado) {
-	if (node.getRight() == nullptr && node.getLeft() == nullptr)
+	if (!node.getRight() && !node.getLeft())
 	{
-		CharInstance dada = node.getDato();
+		CharInstance dada = node.getData();
 		dada.addCode(pos);
 		
 		//return node.getDato();
 		resultado.push_back(dada);
 	}
-	if (node.getLeft()!= nullptr) {
+	if (node.getLeft()) {
 		
-		 testeo(*node.getLeft(),pos + "0", resultado);
+		testeo(*node.getLeft(),pos + "0", resultado);
 
 	}
-	 if (node.getRight() != nullptr) {
+	if (node.getRight()) {
 		
 	    testeo(*node.getRight(), pos + "1", resultado);
 	}
