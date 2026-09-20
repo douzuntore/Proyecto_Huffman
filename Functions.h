@@ -15,3 +15,5 @@ vector<CharInstance> createCodeTables(BTree<CharInstance>&);
 void testeo(BTree<CharInstance>&, string, vector<CharInstance>&);
 
 void showCodeTables(vector<CharInstance> vector);
+
+string prueba(vector<CharInstance>, string);

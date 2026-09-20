@@ -127,3 +127,27 @@ void testeo(BTree<CharInstance>& node, string pos, vector<CharInstance>& resulta
 	}
 	
 }
+
+
+
+string prueba(vector<CharInstance> vector, string palabra) {
+
+	string salida = "";
+	for (int i = 0; i < palabra.size(); i++){
+		char a = palabra[i];
+		for (int i = 0; i < vector.size(); i++)
+		{
+			char ch = vector[i].getChr();
+			if (ch==a)
+			{
+				salida += vector[i].getCode();
+				break;
+			}
+		}
+		
+
+
+
+	}
+	return salida;
+}
