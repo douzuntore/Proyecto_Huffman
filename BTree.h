@@ -12,6 +12,9 @@ public:
 	void appendLeft(BTree<_t>*);
 	void appendRight(BTree<_t>*);
 	_t getDato();
+	BTree<_t>* getLeft();  
+	BTree<_t>* getRight();
+	
 };
 
 template <typename _t>
@@ -54,5 +57,15 @@ _t BTree<_t>::getDato()
 {
 	return data;
 }
+template <typename _t>
+BTree<_t>* BTree<_t>::getLeft()
+{
+	return nodes[0];
+}
 
+template <typename _t>
+BTree<_t>* BTree<_t>::getRight()
+{
+	return nodes[1];
+}
 

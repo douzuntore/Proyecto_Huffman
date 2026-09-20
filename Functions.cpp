@@ -1,4 +1,5 @@
 #include "Functions.h"
+#include <iomanip>
 
 std::vector<CharInstance> createInstanceList(std::string string_input)
 {
@@ -116,3 +117,44 @@ BTree<CharInstance>* createHuffmanTree(std::vector<CharInstance> listado)
 	return main_root;
 }
 
+vector<CharInstance> createCodeTables(BTree<CharInstance>& node) {
+	vector<CharInstance> vector;
+
+	testeo(node, "",vector);
+	return vector;
+}
+
+void showCodeTables(vector<CharInstance> vector) {
+
+	cout << "Tabla de codigos" << endl;
+	cout << left << setw(10) << "Codigo"
+		<< setw(13) << "caracter"
+		<< setw(12) << "frecuencia" << endl;
+	for (int i = 0; i < vector.size(); i++){
+		cout << left << setw(10) << vector[i].getCode()
+			<< setw(13) << vector[i].getChr()
+			<< setw(12) << vector[i].getReps() << endl;
+	}
+
+}
+
+void testeo(BTree<CharInstance>& node, string pos, vector<CharInstance>& resultado) {
+	if (node.getRight() == nullptr && node.getLeft() == nullptr)
+	{
+		CharInstance dada = node.getDato();
+		dada.addCode(pos);
+		
+		//return node.getDato();
+		resultado.push_back(dada);
+	}
+	if (node.getLeft()!= nullptr) {
+		
+		 testeo(*node.getLeft(),pos + "0", resultado);
+
+	}
+	 if (node.getRight() != nullptr) {
+		
+	    testeo(*node.getRight(), pos + "1", resultado);
+	}
+	
+}

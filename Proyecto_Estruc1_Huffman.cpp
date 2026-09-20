@@ -9,6 +9,8 @@ int main()
 	sortInstanceList(list);
 
 	BTree<CharInstance>* instance_tree = createHuffmanTree(list);
-
+	vector<CharInstance> codeTablesVector = createCodeTables(*instance_tree);
+	showCodeTables(codeTablesVector);
+	
 	delete instance_tree;
 }

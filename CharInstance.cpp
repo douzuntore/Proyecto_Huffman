@@ -24,3 +24,12 @@ int CharInstance::getReps()
 {
 	return instances;
 }
+string CharInstance::getCode()
+{
+	return code;
+}
+
+void CharInstance::addCode(string digit)
+{
+	code = digit;
+}
