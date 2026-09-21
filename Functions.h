@@ -10,11 +10,12 @@ void sortInstanceList(std::vector<CharInstance>&);
 
 BTree<CharInstance>* createHuffmanTree(std::vector<BTree<CharInstance>*>);
 
-vector<CharInstance> createCodeTables(BTree<CharInstance>&);
+vector<CharInstance> createCodification(BTree<CharInstance>*);
 
-void testeo(BTree<CharInstance>&, string, vector<CharInstance>&);
+void searchCharInstanceInTree(BTree<CharInstance>*, string, vector<CharInstance>&);
 
-void showCodeTables(vector<CharInstance> vector);
+void showCodeTables(vector<CharInstance>);
 
-string coding(vector<CharInstance>, string);
-string decoding(BTree<CharInstance>* ,string);
+string huffmanCoding(vector<CharInstance>, string);
+
+string huffmanDecoding(BTree<CharInstance>* ,string);

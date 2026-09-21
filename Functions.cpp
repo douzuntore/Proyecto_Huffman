@@ -3,6 +3,8 @@
 
 using list_type = std::vector<BTree<CharInstance>*>;
 
+// ---------- LECTURA DEL STRING DE ENTRADA ----------
+
 list_type createInstanceList(std::string string_input)
 {
 	using namespace std;
@@ -48,6 +50,8 @@ list_type createInstanceList(std::string string_input)
 	return instance_list;
 }
 
+// ---------- CREACION DE ARBOL DE HUFFMAN ----------
+
 BTree<CharInstance>* createHuffmanTree(list_type instance_list)
 {
 	while (instance_list.size() > 1)
@@ -84,22 +88,61 @@ BTree<CharInstance>* createHuffmanTree(list_type instance_list)
 	return instance_list.at(0);
 }
 
-// --------------------
+// ---------- CREACION DE CODIGOS ----------
 
-vector<CharInstance> createCodeTables(BTree<CharInstance>& node) {
-	vector<CharInstance> vector;
+vector<CharInstance> createCodification(BTree<CharInstance>* node) {
 
-	testeo(node, "",vector);
-	return vector;
+	vector<CharInstance> coded_instance_list;
+	searchCharInstanceInTree(node, "", coded_instance_list);
+	return coded_instance_list;
+
+}
+
+void searchCharInstanceInTree(BTree<CharInstance>* node, string codification, vector<CharInstance>& coded_instance_list) {
+
+	if (!node->getRight() && !node->getLeft())
+	{
+		CharInstance node_data = node->getData();
+		node_data.addCode(codification);
+		coded_instance_list.push_back(node_data);
+	}
+	else 
+	{
+		if (node->getLeft())
+			searchCharInstanceInTree(node->getLeft(), codification + "0", coded_instance_list);
+		if (node->getRight())
+			searchCharInstanceInTree(node->getRight(), codification + "1", coded_instance_list);
+	}
+
+}
+
+// ---------- CREACION DE TABLA ----------
+
+void sortInstanceList(std::vector<CharInstance>& instance_list)
+{
+	for (size_t i = 0; i < instance_list.size(); i++)
+	{
+		int max = 0, rep_max = 1;
+		for (size_t j = 0; j < instance_list.size() - i; j++)
+		{
+			if (instance_list.at(j).getInstances() >= rep_max) {
+				rep_max = instance_list.at(j).getInstances();
+				max = j;
+			}
+		}
+		instance_list.push_back(instance_list.at(max));
+		instance_list.erase(instance_list.begin() + max);
+	}
 }
 
 void showCodeTables(vector<CharInstance> vector) {
 
+	sortInstanceList(vector);
 	cout << "Tabla de codigos" << endl;
 	cout << left << setw(13) << "Codigo"
 		<< setw(13) << "caracter"
 		<< setw(13) << "frecuencia" << endl;
-	for (int i = 0; i < vector.size(); i++){
+	for (int i = 0; i < vector.size(); i++) {
 		cout << left << setw(13) << vector[i].getCode()
 			<< setw(13) << vector[i].getChr()
 			<< setw(13) << vector[i].getInstances() << endl;
@@ -107,72 +150,57 @@ void showCodeTables(vector<CharInstance> vector) {
 
 }
 
-void testeo(BTree<CharInstance>& node, string pos, vector<CharInstance>& resultado) {
-	if (!node.getRight() && !node.getLeft())
-	{
-		CharInstance dada = node.getData();
-		dada.addCode(pos);
-		
-		//return node.getDato();
-		resultado.push_back(dada);
-	}
-	if (node.getLeft()) {
-		
-		testeo(*node.getLeft(),pos + "0", resultado);
+// ---------- CODIFICACION ----------
 
-	}
-	if (node.getRight()) {
-		
-	    testeo(*node.getRight(), pos + "1", resultado);
-	}
-	
+string huffmanCoding(vector<CharInstance> coded_instance_list, string string_input) {
+
+	string encoded = "";
+	for (char str_char : string_input)
+		for (CharInstance instance : coded_instance_list)
+			if (str_char == instance.getChr())
+				encoded += instance.getCode();
+
+	return encoded;
+
 }
 
+// ---------- DECODIFICACION ----------
 
+string huffmanDecoding(BTree<CharInstance>* root, string code) {
 
-string coding(vector<CharInstance> vector, string palabra) {
-
-	string salida = "";
-	for (int i = 0; i < palabra.size(); i++){
-		char a = palabra[i];
-		for (int i = 0; i < vector.size(); i++)
+	string decoded = "";
+	BTree<CharInstance>* node = root;
+	for (int i = 0; i < code.size(); i++)
+		if (node->getLeft() && node->getRight())
 		{
-			char ch = vector[i].getChr();
-			if (ch==a)
-			{
-				salida += vector[i].getCode();
-				break;
-			}
-		}
-		
-
-
-
-	}
-	return salida;
-}
-
-string decoding(BTree<CharInstance>* node, string code) {
-
-	string salida = "";
-	BTree<CharInstance>* actualnode = node;
-	for (int i = 0; i < code.size(); i++) {
-
-
-		if (actualnode->getLeft() != nullptr && actualnode->getRight() != nullptr)
-		{
-
 			if (code[i] == '0') {
-				actualnode = actualnode->getLeft();
+				node = node->getLeft();
 			}
 			else if (code[i] == '1') {
-				actualnode = actualnode->getRight();
+				node = node->getRight();
 			}
-			if (actualnode->getLeft() == nullptr && actualnode->getRight() == nullptr) {
-				salida += actualnode->getData().getChr();
-				actualnode = node;
+			if (!node->getLeft() && !node->getRight()) {
+				decoded += node->getData().getChr();
+				node = root;
 			}
 		}
-	}
-		return salida;
+
+	return decoded;
+
 }
+
+// ---------- CALCULO DE BITS ----------
+
+unsigned int bitsInDecodedString(string input)
+{
+	return input.size() * 8;
+}
+
+unsigned int bitsInEncodedString(vector<CharInstance> coded_instance_list)
+{
+	int bit_amnt = 0;
+	for (CharInstance instance : coded_instance_list)
+		bit_amnt += instance.getInstances() * instance.getCode().size();
+	return bit_amnt;
+}
+

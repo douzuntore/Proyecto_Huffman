@@ -3,18 +3,19 @@
 int main()
 {
     using namespace std;
-	string palabra = "ESTRUCTURA DE DATOS I";
+	string palabra = "ASDJHFASDFLFSDAH";
 	vector<BTree<CharInstance>*> list = createInstanceList(palabra);
 
-	//sortInstanceList(list);
-
 	BTree<CharInstance>* instance_tree = createHuffmanTree(list);
-	vector<CharInstance> codeTablesVector = createCodeTables(*instance_tree);
-	showCodeTables(codeTablesVector);
-	string codificada = coding(codeTablesVector, palabra);
+
+	vector<CharInstance> coded_list = createCodification(instance_tree);
+	showCodeTables(coded_list);
+	string codificada = huffmanCoding(coded_list, palabra);
 	cout << "Palabra encriptada:" << endl << codificada << endl;
 
-	string decodificada = decoding(instance_tree, codificada);
+	string decodificada = huffmanDecoding(instance_tree, codificada);
 	cout << "Palabra decodificada: " << decodificada << endl << endl;
 	delete instance_tree;
+
+
 }
