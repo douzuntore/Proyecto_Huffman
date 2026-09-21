@@ -11,6 +11,10 @@ int main()
 	BTree<CharInstance>* instance_tree = createHuffmanTree(list);
 	vector<CharInstance> codeTablesVector = createCodeTables(*instance_tree);
 	showCodeTables(codeTablesVector);
-	cout << "Palabra encriptada:" << endl << prueba(codeTablesVector, palabra) << endl;
+	string codificada = coding(codeTablesVector, palabra);
+	cout << "Palabra encriptada:" << endl << codificada << endl;
+
+	string decodificada = decoding(instance_tree, codificada);
+	cout << "Palabra decodificada: " << decodificada << endl << endl;
 	delete instance_tree;
 }

@@ -130,7 +130,7 @@ void testeo(BTree<CharInstance>& node, string pos, vector<CharInstance>& resulta
 
 
 
-string prueba(vector<CharInstance> vector, string palabra) {
+string coding(vector<CharInstance> vector, string palabra) {
 
 	string salida = "";
 	for (int i = 0; i < palabra.size(); i++){
@@ -150,4 +150,29 @@ string prueba(vector<CharInstance> vector, string palabra) {
 
 	}
 	return salida;
+}
+
+string decoding(BTree<CharInstance>* node, string code) {
+
+	string salida = "";
+	BTree<CharInstance>* actualnode = node;
+	for (int i = 0; i < code.size(); i++) {
+
+
+		if (actualnode->getLeft() != nullptr && actualnode->getRight() != nullptr)
+		{
+
+			if (code[i] == '0') {
+				actualnode = actualnode->getLeft();
+			}
+			else if (code[i] == '1') {
+				actualnode = actualnode->getRight();
+			}
+			if (actualnode->getLeft() == nullptr && actualnode->getRight() == nullptr) {
+				salida += actualnode->getData().getChr();
+				actualnode = node;
+			}
+		}
+	}
+		return salida;
 }

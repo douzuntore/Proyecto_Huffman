@@ -16,4 +16,5 @@ void testeo(BTree<CharInstance>&, string, vector<CharInstance>&);
 
 void showCodeTables(vector<CharInstance> vector);
 
-string prueba(vector<CharInstance>, string);
+string coding(vector<CharInstance>, string);
+string decoding(BTree<CharInstance>* ,string);
