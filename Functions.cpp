@@ -196,11 +196,14 @@ unsigned int bitsInDecodedString(string input)
 	return input.size() * 8;
 }
 
-unsigned int bitsInEncodedString(vector<CharInstance> coded_instance_list)
+unsigned int bitsInEncodedString(string encoded_input)
 {
-	int bit_amnt = 0;
-	for (CharInstance instance : coded_instance_list)
-		bit_amnt += instance.getInstances() * instance.getCode().size();
-	return bit_amnt;
+	return encoded_input.size();
+}
+
+unsigned double compressionRatio(string input, string encoded_input)
+{
+	unsigned double ahorro = ((double)(bitsInDecodedString(input) - (double)bitsInEncodedString(encoded_input)) / (double)bitsInDecodedString(input)) * 100;
+	return ahorro;
 }
 

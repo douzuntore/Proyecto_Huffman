@@ -1,9 +1,25 @@
 #include "Functions.h"
 
-int main()
+int main(int argc, char* argv[])
 {
+	if (argc < 2) {
+		cout << "Ingrese una cadena de entrada" << endl;
+		return 0;
+	}
+	string palabra = "";
+	for (int i = 1; i < argc; i++)
+	{
+		palabra += argv[i];
+		if (i != argc-1)
+			palabra += " ";
+	}
+		
+	if (palabra.size() < 20) {
+		cout << "La cadena debe tener al menos 20 caracteres" << endl;
+		return 0;
+	}
     using namespace std;
-	string palabra = "ASDJHFASDFLFSDAH";
+	//string palabra = "ESTRUCTURA DE DATOS I";
 	vector<BTree<CharInstance>*> list = createInstanceList(palabra);
 
 	BTree<CharInstance>* instance_tree = createHuffmanTree(list);
@@ -15,7 +31,11 @@ int main()
 
 	string decodificada = huffmanDecoding(instance_tree, codificada);
 	cout << "Palabra decodificada: " << decodificada << endl << endl;
+
+	cout << "Tamanio original: " << bitsInDecodedString(decodificada) << endl;
+	cout << "Tamanio codificado: " << bitsInEncodedString(codificada) << endl;
+	cout << "Porcentaje de ahorro: " << compressionRatio(decodificada, codificada) << "%" << endl;
+
 	delete instance_tree;
-
-
+	return 0;
 }
