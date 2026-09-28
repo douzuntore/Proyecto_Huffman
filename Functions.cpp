@@ -210,9 +210,9 @@ unsigned int bitsInEncodedString(string encoded_input)
 	return encoded_input.size();
 }
 
-unsigned double compressionRatio(string input, string encoded_input)
+double compressionRatio(string input, string encoded_input)
 {
-	unsigned double ahorro = ((double)(bitsInDecodedString(input) - (double)bitsInEncodedString(encoded_input)) / (double)bitsInDecodedString(input)) * 100;
+	double ahorro = ((double)(bitsInDecodedString(input) - (double)bitsInEncodedString(encoded_input)) / (double)bitsInDecodedString(input)) * 100;
 	return ahorro;
 }
 

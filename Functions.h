@@ -23,4 +23,4 @@ string huffmanDecoding(BTree<CharInstance>* ,string);
 unsigned int bitsInDecodedString(string input);
 unsigned int bitsInEncodedString(string encoded_input);
 
-unsigned int compressionRatio(string input, string encoded_input);
+double compressionRatio(string input, string encoded_input);
