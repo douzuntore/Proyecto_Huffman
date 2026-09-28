@@ -93,7 +93,14 @@ BTree<CharInstance>* createHuffmanTree(list_type instance_list)
 vector<CharInstance> createCodification(BTree<CharInstance>* node) {
 
 	vector<CharInstance> coded_instance_list;
-	searchCharInstanceInTree(node, "", coded_instance_list);
+	if (!node->getLeft() && !node->getRight())
+	{
+		CharInstance node_data = node->getData();
+		node_data.addCode("0");
+		coded_instance_list.push_back(node_data);
+	}
+	else
+		searchCharInstanceInTree(node, "", coded_instance_list);
 	return coded_instance_list;
 
 }
@@ -184,6 +191,8 @@ string huffmanDecoding(BTree<CharInstance>* root, string code) {
 				node = root;
 			}
 		}
+		else
+			decoded += node->getData().getChr();
 
 	return decoded;
 

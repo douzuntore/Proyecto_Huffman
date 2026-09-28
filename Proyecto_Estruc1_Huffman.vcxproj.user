@@ -2,7 +2,7 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommandArguments>ESTRUCTURA DE DATOS I</LocalDebuggerCommandArguments>
-    <LocalDebuggerCommandArgumentsHistory>ESTRUCTURA DE DATOS I|</LocalDebuggerCommandArgumentsHistory>
+    <LocalDebuggerCommandArgumentsHistory>@yz nega wtf 5h en roblox :sob:|aaaaabbbbbaaaaabbbbb|abcabcabcabcabcabc|abcabcabcabcabcabcabc|aaaaaaaaaaaaaaaaaaaa|</LocalDebuggerCommandArgumentsHistory>
+    <LocalDebuggerCommandArguments>aaaaaaaaaaaaaaaaaaaa</LocalDebuggerCommandArguments>
   </PropertyGroup>
 </Project>

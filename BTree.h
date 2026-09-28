@@ -35,9 +35,8 @@ template <typename _t>
 BTree<_t>::~BTree()
 {
 	for (BTree<_t>* node : nodes)
-	{
-		delete node;
-	}
+		if (node)
+			delete node;
 }
 
 template <typename _t>
